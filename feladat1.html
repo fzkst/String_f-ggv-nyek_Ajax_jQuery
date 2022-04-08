@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1. feladat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"crossorigin="anonymous"></script>
+
+</head>
+<style>
+    .mozgathato{
+        cursor: grab;
+    }
+</style>
+<body>
+    <div>
+        <table class="table table-striped" id="kutyakTabla">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Név</th>
+                    <th>Életkor</th>
+                    <th>Fajta</th>
+                    <th>Gazda neve</th>
+                </tr>
+            </thead>
+            <tbody id="lista"></tbody>
+        </table>
+    </div>
+
+
+
+    <script>
+        $.ajax({
+            url: "data1.json",
+            dataType: "json",
+            success: function (data) {
+                console.log(data)
+                let sor = "";   //let table_html = "";
+                $(data).each(function (index, element) {
+                    sor += `<tr>
+                    <td class="mozgathato">${element.id}</td>
+                    <td>${element.nev}</td>
+                    <td>${element.eletkor}</td>
+                    <td>${element.fajta}</td>
+                    <td>${element.gazda_neve}</td>
+                    </tr>`;
+                });
+                $("#lista").html(sor);
+            }
+        });
+
+        $(function() {
+            $("#lista").sortable({
+                items: 'tr',
+                cancel: 'td:not(.mozgathato)'
+            });
+        });
+
+
+
+        //const url = "data1.json";
+        // $.getJSON(url = "data1.json",
+        //     function (data, textStatus, jqXHR) {
+        //         if (textStatus == "success") {
+        //             let table_html = "";
+        //             $(data).each(function (index, element) {
+        //                 table_html += `<tr>
+        //                             <td class="mozgathato">${element.id}</td>
+        //                             <td>${element.name}</td>
+        //                             <td>${element.email}</td>
+        //                         </tr>`;
+        //             });
+        //             $("#ember_tabla").html(table_html);
+        //         }
+        //     });
+    </script>
+</body>
+
+</html>
